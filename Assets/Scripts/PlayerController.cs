@@ -9,8 +9,12 @@ public class PlayerController : MonoBehaviour
     public FloatingJoystick floatingJoystick;
     public Button jumpButton;
     public Image healthImage;
+    public float invincibleTime = 1.5f;
+    public SceneController sc;
 
-
+    bool isRight;//角色朝向
+    float invincibleTimer;//无敌倒计时
+    bool isInvincible;//是否无敌
     int maxHealth = 3;
     int currenthealth;
     Rigidbody2D rBody;
@@ -18,6 +22,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isInvincible = false;
+        invincibleTimer = invincibleTime;
         currenthealth = maxHealth;
         rBody = gameObject.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -29,13 +35,23 @@ public class PlayerController : MonoBehaviour
     {
         float moveX = floatingJoystick.Horizontal;
         float moveY = floatingJoystick.Vertical;
+        isRight = moveX > 0 ? true : false; 
         //角色左右移动
         animator.SetFloat("moveX",moveX);
         animator.SetFloat("moveY",rBody.velocity.y);
         var velo = rBody.velocity;
         velo.x = moveX * speed;
         rBody.velocity = velo;
-        
+        //判断是否无敌
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+            {
+                isInvincible = false;
+                invincibleTimer = invincibleTime;
+            }
+        }   
     }
 
     void jump(){
@@ -46,22 +62,45 @@ public class PlayerController : MonoBehaviour
     }
 
     public void healthChange(int health){
-        currenthealth = Mathf.Clamp(currenthealth + health, 0 , 3);
-        //修改血量图片
-        healthImage.fillAmount = 0.117f * currenthealth + 0.25f;
-        if (health < 0)
+        
+        //受到伤害且不是无敌状态
+        if (health < 0 && !isInvincible)
         {
+            //状态改为无敌
+            isInvincible = true;
+            currenthealth = Mathf.Clamp(currenthealth + health, 0 , 3);
+            //修改血量图片
+            healthImage.fillAmount = 0.117f * currenthealth + 0.25f;
             hurt();
+        }
+        //踩死怪物虽然不掉血，但是触发跳跃
+        if (health == 0)
+        {
+            rBody.velocity = Vector2.zero;
+            rBody.AddForce(new Vector2(isRight ? -0.5f : 0.5f, 0.7f) * jumpForce);
+        }
+        //吃到萝卜回血
+        if (health > 0)
+        {
+            currenthealth = Mathf.Clamp(currenthealth + health, 0 , 3);
+            //修改血量图片
+            healthImage.fillAmount = 0.117f * currenthealth + 0.25f;
         }
     }
 
-    //受到伤害动画
+    //受到伤害动画并且被弹开
     void hurt(){
-        rBody.AddForce(Vector2.left * jumpForce);
+        rBody.velocity = Vector2.zero;
+        rBody.AddForce(new Vector2(isRight ? -0.5f : 0.5f, 0.7f) * jumpForce);
         animator.SetTrigger("hurt");
     }
-    //结束伤害动画
+    //结束伤害动画,如果生命值为0则重新开始本关
     void hurtEnd(){
         animator.SetTrigger("unhurt");
+        if (currenthealth == 0)
+        {
+            Destroy(gameObject);
+            sc.reloadScene();
+        }
     }
 }
