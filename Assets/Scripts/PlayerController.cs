@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 3f;
     public float jumpForce = 3f;
     public FloatingJoystick floatingJoystick;
     public Button jumpButton;
-    public Image healthImage;
+    public Image healthImage;//生命值UI
     public float invincibleTime = 1.5f;
     public SceneController sc;
+    public Button muteButton;//静音按钮
 
     bool isRight;//角色朝向
     float invincibleTimer;//无敌倒计时
     bool isInvincible;//是否无敌
-    int maxHealth = 3;
-    int currenthealth;
+    int maxHealth = 3;//最大生命
+    int currenthealth;//当前生命
     Rigidbody2D rBody;
     Animator animator;
     // Start is called before the first frame update
@@ -27,12 +29,23 @@ public class PlayerController : MonoBehaviour
         currenthealth = maxHealth;
         rBody = gameObject.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        jumpButton.onClick.AddListener(jump);
+        // jumpButton.onClick.AddListener(jump);
+        //跳跃按钮添加点击事件
+        EventTrigger trigger = jumpButton.GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data); });
+        trigger.triggers.Add(entry);
+        //静音按钮添加点击事件
+        muteButton.onClick.AddListener(mute);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //设置音量图标
+        muteButton.GetComponent<Image>().sprite = PlayerPrefs.GetInt("mute") == 0 ? (Sprite)Resources.Load("unmute",typeof(Sprite)) : (Sprite)Resources.Load("mute",typeof(Sprite));
+        //muteButton.GetComponent<Image>().fillAmount = PlayerPrefs.GetInt("mute");
         float moveX = floatingJoystick.Horizontal;
         float moveY = floatingJoystick.Vertical;
         isRight = moveX > 0 ? true : false; 
@@ -108,4 +121,14 @@ public class PlayerController : MonoBehaviour
             sc.reloadScene();
         }
     }
+    
+    void mute(){
+        //设置静音
+        PlayerPrefs.SetInt("mute", PlayerPrefs.GetInt("mute") == 0 ? 1 : 0);
+    }
+
+    public void OnPointerDownDelegate(PointerEventData eventData){
+        jump();
+    }
+    
 }

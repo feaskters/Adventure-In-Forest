@@ -70,6 +70,9 @@ public class EnemyController : MonoBehaviour
                 other.gameObject.GetComponent<PlayerController>().healthChange(0);
                 //自身播放死亡动画
                 animator.SetTrigger("dead");
+                //重置重力和速度
+                rBody.gravityScale = 0;
+                rBody.velocity = Vector2.zero;
                 isDead = true;
                 GetComponent<Collider2D>().enabled = false;
                 rBody.Sleep();

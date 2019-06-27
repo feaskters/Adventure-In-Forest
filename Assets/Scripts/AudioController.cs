@@ -23,7 +23,8 @@ public class AudioController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        theAs.mute = PlayerPrefs.GetInt("mute") != 0;
+        GetComponents<AudioSource>()[1].mute = PlayerPrefs.GetInt("mute") != 0;
     }
 
     public void collectPlay(){
