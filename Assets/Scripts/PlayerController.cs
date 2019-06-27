@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public float invincibleTime = 1.5f;
     public SceneController sc;
     public Button muteButton;//静音按钮
+    // public Sprite muteImage;
+    // public Sprite unmuteImage;
 
     bool isRight;//角色朝向
     float invincibleTimer;//无敌倒计时
@@ -44,8 +46,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //设置音量图标
-        muteButton.GetComponent<Image>().sprite = PlayerPrefs.GetInt("mute") == 0 ? (Sprite)Resources.Load("unmute",typeof(Sprite)) : (Sprite)Resources.Load("mute",typeof(Sprite));
+        // if (PlayerPrefs.GetInt("mute") == 0)
+        // {
+        //     muteButton.GetComponent<Image>().sprite = unmuteImage;
+        // }else{
+        //     muteButton.GetComponent<Image>().sprite = muteImage;
+        // }
         //muteButton.GetComponent<Image>().fillAmount = PlayerPrefs.GetInt("mute");
+        muteButton.GetComponent<Image>().sprite = PlayerPrefs.GetInt("mute") == 0 ? (Sprite)Resources.Load("unmute",typeof(Sprite) ): (Sprite)Resources.Load("mute",typeof(Sprite));
         float moveX = floatingJoystick.Horizontal;
         float moveY = floatingJoystick.Vertical;
         isRight = moveX > 0 ? true : false; 
