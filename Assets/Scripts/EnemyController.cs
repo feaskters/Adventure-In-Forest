@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public float actTime = 2f;
     public bool isRight = false;
     public bool chasePlayer = false;
-    public float arrange = 6f;
+    public float arrange = 7f;
 
     bool isDead;
     Animator animator;
@@ -36,6 +36,9 @@ public class EnemyController : MonoBehaviour
         {
             //追随
             // rBody.velocity = Vector2.lerp(rBody.velocity, new Vector2(player.transform.position.x - transform.position.x,player.transform.position.y - transform.position.y).normalized * speed,0.1f);
+            var velo = Vector2.MoveTowards(rBody.transform.position,player.transform.position, speed * 3 * Time.deltaTime);
+            rBody.MovePosition(velo);
+            animator.SetFloat("moveX", velo.x > 0 ? 1 : 0);
         }else{
             actTimer -= Time.deltaTime;
             var position = rBody.position;
@@ -70,6 +73,7 @@ public class EnemyController : MonoBehaviour
                 isDead = true;
                 GetComponent<Collider2D>().enabled = false;
                 rBody.Sleep();
+                AudioController.instance.enemydeadPlay();
                 Invoke("dead", 1f);
             }else{
                 other.gameObject.GetComponent<PlayerController>().healthChange(-1);

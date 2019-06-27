@@ -30,7 +30,7 @@ public class SceneController : MonoBehaviour
     }
 
     void backToMain(){
-        Debug.Log("asds");
+        AudioController.instance.buttonPlay();
         sceneName = "MainScene";
         transition.SetTrigger("out");
         Invoke("animationEnded", 1f);
@@ -46,6 +46,14 @@ public class SceneController : MonoBehaviour
     }
 
     void animationEnded(){
-        SceneManager.LoadScene(sceneName);
+        try
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        catch (System.Exception)
+        {
+            SceneManager.LoadScene("MainScene");
+            throw;
+        }
     }
 }

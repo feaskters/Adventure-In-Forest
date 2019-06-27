@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
         var velo = rBody.velocity;
         velo.x = moveX * speed;
         rBody.velocity = velo;
+        //脚步声
+        
         //判断是否无敌
         if (isInvincible)
         {
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
         if (rBody.velocity.y < 0.001 && rBody.velocity.y > -0.001)
         {
             rBody.AddForce(Vector2.up * jumpForce);
+            AudioController.instance.jumpPlay();
         }
     }
 
@@ -66,6 +69,8 @@ public class PlayerController : MonoBehaviour
         //受到伤害且不是无敌状态
         if (health < 0 && !isInvincible)
         {
+            //播放音效
+            AudioController.instance.damagePlay();
             //状态改为无敌
             isInvincible = true;
             currenthealth = Mathf.Clamp(currenthealth + health, 0 , 3);

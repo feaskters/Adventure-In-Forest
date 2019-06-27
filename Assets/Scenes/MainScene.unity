@@ -867,6 +867,8 @@ MonoBehaviour:
   tip: {fileID: 1698859131}
   tipYes: {fileID: 594870976}
   tipNo: {fileID: 345653948}
+  audioManager: {fileID: 8300585660351716897, guid: b06bea5b13ff242d3b36e70400a295c1,
+    type: 3}
 --- !u!1 &753878882
 GameObject:
   m_ObjectHideFlags: 0

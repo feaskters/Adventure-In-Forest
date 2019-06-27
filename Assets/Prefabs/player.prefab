@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 7251c83565d5b4ff9b4b45696134338e, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &2361948666653373826
 Animator:

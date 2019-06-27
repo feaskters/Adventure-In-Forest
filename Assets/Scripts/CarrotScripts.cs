@@ -8,6 +8,7 @@ public class CarrotScripts : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player")
         {
+            AudioController.instance.collectPlay();
             other.GetComponent<PlayerController>().healthChange(1);
             Instantiate(collectEffective,transform.position,Quaternion.identity);
             Destroy(gameObject);

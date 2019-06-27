@@ -11,13 +11,16 @@ public class MainSceneEventSystem : MonoBehaviour
     public GameObject tip;
     public Button tipYes;
     public Button tipNo;
+    public GameObject audioManager;
     void Start()
     {
         //给按钮添加点击事件
         newGame.onClick.AddListener(newgame);
         continueGame.onClick.AddListener(conitnuegame);
-        tipNo.onClick.AddListener(() => {tip.GetComponent<Animator>().SetTrigger("TipOut");});
-        tipYes.onClick.AddListener(() => {SceneManager.LoadScene("1level");});
+        tipNo.onClick.AddListener(() => {tip.GetComponent<Animator>().SetTrigger("TipOut");
+            AudioController.instance.buttonPlay();});
+        tipYes.onClick.AddListener(() => {SceneManager.LoadScene("1level");
+            AudioController.instance.buttonPlay();});
 
         //判断继续游戏是否有效
         if (PlayerPrefs.GetInt("level") < 1)
@@ -25,6 +28,12 @@ public class MainSceneEventSystem : MonoBehaviour
             continueGame.interactable = false;
         }else{
             continueGame.interactable = true;
+        }
+        if (! AudioController.isHaveClone)
+        {
+            audioManager = Instantiate(audioManager);
+            DontDestroyOnLoad(audioManager);
+            AudioController.isHaveClone = true;
         }
     }
 
@@ -35,6 +44,7 @@ public class MainSceneEventSystem : MonoBehaviour
     }
 
     void newgame(){
+        AudioController.instance.buttonPlay();
         if (PlayerPrefs.GetInt("level") > 1)
         {
             tip.GetComponent<Animator>().SetTrigger("TipIn");
@@ -44,6 +54,7 @@ public class MainSceneEventSystem : MonoBehaviour
     }
 
     void conitnuegame(){
+        AudioController.instance.buttonPlay();
         SceneManager.LoadScene(PlayerPrefs.GetInt("level") + "level");
     }
 }
