@@ -179,6 +179,8 @@ public class slugBossController : MonoBehaviour
                         Destroy(spikegate);
                         //结束战斗音乐
                         AudioController.instance.fightEnd();
+                        AudioController.instance.fightSuccessPlay();
+                        bossUI.SetActive(false);
                         Invoke("dead", 1f);
                     } 
                 }
