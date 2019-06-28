@@ -5315,6 +5315,11 @@ PrefabInstance:
       propertyPath: spikegate
       value: 
       objectReference: {fileID: 901508682}
+    - target: {fileID: 5492036453696458364, guid: 43dcc357f496748a3bdf609651b5d851,
+        type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43dcc357f496748a3bdf609651b5d851, type: 3}
 --- !u!1001 &6359011217805415620

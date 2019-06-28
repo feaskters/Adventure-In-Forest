@@ -148,7 +148,7 @@ MonoBehaviour:
   enemydead: {fileID: 8300000, guid: ffe1fc5f5e00648c8b6b77e68d4caa63, type: 3}
   dash: {fileID: 8300000, guid: 2c542f1c4080b4c1ea1e996a4016c501, type: 3}
   jump: {fileID: 8300000, guid: 3ba736d22bfbc453587f81370cabee0a, type: 3}
-  fightSuccess: {fileID: 8300000, guid: abd15e9854173406fbeeca1e18267375, type: 3}
+  fightSuccess: {fileID: 8300000, guid: f39c52ac84e3b4a21abde4e540fb5e86, type: 3}
   theAs: {fileID: 8300585660351716899}
 --- !u!82 &8300585660351716925
 AudioSource:

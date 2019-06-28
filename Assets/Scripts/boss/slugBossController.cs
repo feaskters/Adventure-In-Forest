@@ -52,7 +52,7 @@ public class slugBossController : MonoBehaviour
         //人物与怪物的距离
         var distance = Vector2.Distance(player.transform.position, transform.position);
         //血量图片控制
-
+        if(isDead) bossUI.SetActive(false);
         healthImage.fillAmount = currentHealth / maxHealth;
         //无敌时间控制
         if (invincibleTimer < invincibleTime)
@@ -87,7 +87,10 @@ public class slugBossController : MonoBehaviour
         if (chasePlayer && distance < arrange)
         {
             //显示bossUI
-            bossUI.SetActive(true);
+            if (!isDead)
+            {
+                bossUI.SetActive(true);
+            }
             //追随
             // rBody.velocity = Vector2.lerp(rBody.velocity, new Vector2(player.transform.position.x - transform.position.x,player.transform.position.y - transform.position.y).normalized * speed,0.1f);
             var velo = rBody.velocity;
@@ -180,7 +183,6 @@ public class slugBossController : MonoBehaviour
                         //结束战斗音乐
                         AudioController.instance.fightEnd();
                         AudioController.instance.fightSuccessPlay();
-                        bossUI.SetActive(false);
                         Invoke("dead", 1f);
                     } 
                 }
