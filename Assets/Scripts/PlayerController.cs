@@ -13,9 +13,15 @@ public class PlayerController : MonoBehaviour
     public float invincibleTime = 1.5f;
     public SceneController sc;
     public Button muteButton;//静音按钮
+    public Button dashButton;//冲刺按钮
+    public float dashCD = 3f;//冲刺冷却时间
+    public float dashingTime = 1f;//冲刺时间
+    public float dashForce = 10f;//冲刺力度
     // public Sprite muteImage;
     // public Sprite unmuteImage;
 
+    float dashTimer;//冲刺当前冷却时间
+    float dashingTimer;//冲刺时间计时器
     bool isRight;//角色朝向
     float invincibleTimer;//无敌倒计时
     bool isInvincible;//是否无敌
@@ -38,8 +44,17 @@ public class PlayerController : MonoBehaviour
         entry.eventID = EventTriggerType.PointerDown;
         entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data); });
         trigger.triggers.Add(entry);
+        //冲刺按钮添加点击事件
+        EventTrigger triggerDash = dashButton.GetComponent<EventTrigger>();
+        EventTrigger.Entry entryDash = new EventTrigger.Entry();
+        entryDash.eventID = EventTriggerType.PointerDown;
+        entryDash.callback.AddListener((data) => { OnPointerDownDashDelegate((PointerEventData)data); });
+        triggerDash.triggers.Add(entryDash);
         //静音按钮添加点击事件
         muteButton.onClick.AddListener(mute);
+        //重置dashCD
+        dashTimer = dashCD;
+        dashingTimer = dashingTime;
     }
 
     // Update is called once per frame
@@ -56,15 +71,33 @@ public class PlayerController : MonoBehaviour
         muteButton.GetComponent<Image>().sprite = PlayerPrefs.GetInt("mute") == 0 ? (Sprite)Resources.Load("unmute",typeof(Sprite) ): (Sprite)Resources.Load("mute",typeof(Sprite));
         float moveX = floatingJoystick.Horizontal;
         float moveY = floatingJoystick.Vertical;
-        isRight = moveX > 0 ? true : false; 
         //角色左右移动
         animator.SetFloat("moveX",moveX);
         animator.SetFloat("moveY",rBody.velocity.y);
         var velo = rBody.velocity;
         velo.x = moveX * speed;
         rBody.velocity = velo;
-        //脚步声
-        
+        if (velo.x > 0)
+        {
+            isRight = true;
+        }else if (velo.x < 0)
+        {
+            isRight = false;
+        }
+        //判断dashCd
+        if (dashTimer < dashCD)
+        {
+            dashTimer = Mathf.Clamp(dashTimer + Time.deltaTime , 0 , dashCD);
+        }
+        dashButton.GetComponent<Image>().fillAmount = dashTimer / dashCD;
+        //冲刺
+        if (dashingTimer < dashingTime)
+        {
+            dashingTimer = Mathf.Clamp(dashingTimer + Time.deltaTime * 8, 0 , dashingTime);
+            var position = rBody.position;
+            position.x += isRight ? dashForce * Time.deltaTime * 8 : - dashForce * Time.deltaTime * 8;
+            rBody.MovePosition(position);
+        }
         //判断是否无敌
         if (isInvincible)
         {
@@ -135,8 +168,18 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetInt("mute", PlayerPrefs.GetInt("mute") == 0 ? 1 : 0);
     }
 
+    //跳跃代理
     public void OnPointerDownDelegate(PointerEventData eventData){
         jump();
     }
-    
+
+    //冲刺代理
+    public void OnPointerDownDashDelegate(PointerEventData eventData){
+        if (dashButton.GetComponent<Image>().fillAmount == 1)
+        {
+            AudioController.instance.dashPlay();
+            dashTimer = 0f;
+            dashingTimer = 0f;
+        }
+    }
 }

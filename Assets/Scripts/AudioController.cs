@@ -9,9 +9,9 @@ public class AudioController : MonoBehaviour
     public AudioClip collect;
     public AudioClip buttonClick;
     public AudioClip enemydead;
-    public AudioClip step;
+    public AudioClip dash;
     public AudioClip jump;
-    public AudioClip jumpEnd;
+    public AudioClip fightSuccess;
     public AudioSource theAs;
     public static bool isHaveClone = false;
     // Start is called before the first frame update
@@ -35,8 +35,8 @@ public class AudioController : MonoBehaviour
         theAs.PlayOneShot(damage);
     }
 
-    public void stepPlay(){
-        
+    public void dashPlay(){
+        theAs.PlayOneShot(dash);
     }
 
     public void enemydeadPlay(){
@@ -51,7 +51,17 @@ public class AudioController : MonoBehaviour
         theAs.PlayOneShot(jump);
     }
 
-    public void jumpEndPlay(){
-        theAs.PlayOneShot(jumpEnd);
+    public void fightSuccessPlay(){
+        theAs.PlayOneShot(fightSuccess);
+    }
+
+    public void fightPlay(){
+        GetComponents<AudioSource>()[1].Pause();
+        GetComponents<AudioSource>()[2].Play();
+    }
+
+    public void fightEnd(){
+        GetComponents<AudioSource>()[2].Stop();
+        GetComponents<AudioSource>()[1].UnPause();
     }
 }

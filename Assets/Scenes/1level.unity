@@ -12750,6 +12750,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a77723b8c9e9f4f1cbba1f76039b1a2b, type: 3}
+--- !u!114 &392740878510983863 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 335315907, guid: a77723b8c9e9f4f1cbba1f76039b1a2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 392740878510983862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1169893401944421361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13049,6 +13061,11 @@ PrefabInstance:
       propertyPath: muteButton
       value: 
       objectReference: {fileID: 819536083}
+    - target: {fileID: 2361948666653373827, guid: 9ec614e3a4b5d4d1b82383d70b5907d0,
+        type: 3}
+      propertyPath: dashButton
+      value: 
+      objectReference: {fileID: 392740878510983863}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ec614e3a4b5d4d1b82383d70b5907d0, type: 3}
 --- !u!1001 &5492036453449578266
