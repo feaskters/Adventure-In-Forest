@@ -25,6 +25,7 @@ public class AudioController : MonoBehaviour
     {
         theAs.mute = PlayerPrefs.GetInt("mute") != 0;
         GetComponents<AudioSource>()[1].mute = PlayerPrefs.GetInt("mute") != 0;
+        GetComponents<AudioSource>()[2].mute = PlayerPrefs.GetInt("mute") != 0;
     }
 
     public void collectPlay(){

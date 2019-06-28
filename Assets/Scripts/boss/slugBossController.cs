@@ -133,7 +133,7 @@ public class slugBossController : MonoBehaviour
                 isCrashAttackMode = true;
                 attackTimer -= Time.deltaTime;
                 var velo3 = rBody.velocity;
-                velo3.x = rBody.transform.position.x - player.transform.position.x > 0 ? -jumpForce / 2: jumpForce / 2;
+                velo3.x = rBody.transform.position.x - player.transform.position.x > 0 ? -jumpForce / 1.5f: jumpForce / 1.5f;
                 velo3.y = 0;
                 rBody.AddForce(velo3);
             }
@@ -175,9 +175,10 @@ public class slugBossController : MonoBehaviour
                     currentHealth -= 1;
 
                     //如果血量低于15进入第二阶段
-                    if(currentHealth <= 15){
+                    if(currentHealth == 15){
                         nowColor = new Color32(253,21,21,255);
                         attackTime = 2f;
+                        attackTimer = 2f;
                     }
 
                     if (currentHealth == 0)
@@ -201,12 +202,7 @@ public class slugBossController : MonoBehaviour
                 
                 
             }else{
-                if (currentHealth <= 15)
-                {
-                    other.gameObject.GetComponent<PlayerController>().healthChange(-2);
-                }else{
-                    other.gameObject.GetComponent<PlayerController>().healthChange(-1);
-                }
+                 other.gameObject.GetComponent<PlayerController>().healthChange(-1);
                 
             }
         }
