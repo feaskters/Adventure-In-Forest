@@ -24,6 +24,7 @@ public class slugBossController : MonoBehaviour
     float jumpAttackTimer = 0.1f;//跳跃攻击模式倒计时
     float invincibleTimer;
     float currentHealth;
+    Color32 nowColor;
     public Image healthImage;
 
     bool isDead;
@@ -44,6 +45,8 @@ public class slugBossController : MonoBehaviour
         attackTimer = attackTime;
         //播放战斗音乐
         AudioController.instance.fightPlay();
+        //初始化颜色
+        nowColor = new Color32(255,255,255,255);
     }
 
     // Update is called once per frame
@@ -66,11 +69,13 @@ public class slugBossController : MonoBehaviour
         //跳跃攻击模式控制
         if (isJumpAttackMode)
         {
+            GetComponent<SpriteRenderer>().color = new Color32(105,255,0,255);
             jumpAttackTimer -= Time.deltaTime;
             if (jumpAttackTimer <= 0)
             {
                 jumpAttackTimer = 0.1f;
                 isJumpAttackMode = false;
+                GetComponent<SpriteRenderer>().color = nowColor;
             }
         }
         //冲刺攻击模式控制
@@ -168,6 +173,13 @@ public class slugBossController : MonoBehaviour
                     other.gameObject.GetComponent<PlayerController>().healthChange(0);
                     AudioController.instance.enemydeadPlay();
                     currentHealth -= 1;
+
+                    //如果血量低于15进入第二阶段
+                    if(currentHealth <= 15){
+                        nowColor = new Color32(253,21,21,255);
+                        attackTime = 2f;
+                    }
+
                     if (currentHealth == 0)
                     {
                         //自身播放死亡动画
@@ -189,7 +201,13 @@ public class slugBossController : MonoBehaviour
                 
                 
             }else{
-                other.gameObject.GetComponent<PlayerController>().healthChange(-1);
+                if (currentHealth <= 15)
+                {
+                    other.gameObject.GetComponent<PlayerController>().healthChange(-2);
+                }else{
+                    other.gameObject.GetComponent<PlayerController>().healthChange(-1);
+                }
+                
             }
         }
     }
