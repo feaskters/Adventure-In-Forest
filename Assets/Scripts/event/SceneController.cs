@@ -31,6 +31,7 @@ public class SceneController : MonoBehaviour
 
     void backToMain(){
         AudioController.instance.buttonPlay();
+        AudioController.instance.fightEnd();
         sceneName = "MainScene";
         transition.SetTrigger("out");
         Invoke("animationEnded", 1f);
@@ -39,6 +40,7 @@ public class SceneController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player")
         {
+            AudioController.instance.fightEnd();
             sceneName = (int.Parse(userData.name)+ 1) + "level";
             transition.SetTrigger("out");
             Invoke("animationEnded", 1f);
@@ -49,6 +51,10 @@ public class SceneController : MonoBehaviour
         try
         {
             SceneManager.LoadScene(sceneName);
+            if (sceneName == "14level")
+            {
+                SceneManager.LoadScene("MainScene");
+            }
         }
         catch (System.Exception)
         {

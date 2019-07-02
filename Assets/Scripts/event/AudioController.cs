@@ -12,6 +12,8 @@ public class AudioController : MonoBehaviour
     public AudioClip dash;
     public AudioClip jump;
     public AudioClip fightSuccess;
+    public AudioClip star;
+
     public AudioSource theAs;
     public static bool isHaveClone = false;
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class AudioController : MonoBehaviour
     {
         theAs.mute = PlayerPrefs.GetInt("mute") != 0;
         GetComponents<AudioSource>()[1].mute = PlayerPrefs.GetInt("mute") != 0;
+        GetComponents<AudioSource>()[2].mute = PlayerPrefs.GetInt("mute") != 0;
     }
 
     public void collectPlay(){
@@ -63,5 +66,9 @@ public class AudioController : MonoBehaviour
     public void fightEnd(){
         GetComponents<AudioSource>()[2].Stop();
         GetComponents<AudioSource>()[1].UnPause();
+    }
+
+    public void starPlay(){
+        theAs.PlayOneShot(star);
     }
 }

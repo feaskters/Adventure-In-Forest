@@ -149,6 +149,7 @@ MonoBehaviour:
   dash: {fileID: 8300000, guid: 2c542f1c4080b4c1ea1e996a4016c501, type: 3}
   jump: {fileID: 8300000, guid: 3ba736d22bfbc453587f81370cabee0a, type: 3}
   fightSuccess: {fileID: 8300000, guid: f39c52ac84e3b4a21abde4e540fb5e86, type: 3}
+  star: {fileID: 8300000, guid: 9eff07ad186dd41898270190d856e2c8, type: 3}
   theAs: {fileID: 8300585660351716899}
 --- !u!82 &8300585660351716925
 AudioSource:
