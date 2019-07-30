@@ -12,6 +12,7 @@ public class MainSceneEventSystem : MonoBehaviour
     public Button tipYes;
     public Button tipNo;
     public GameObject audioManager;
+    public Font custonfont;
     void Start()
     {
         //给按钮添加点击事件
@@ -34,6 +35,22 @@ public class MainSceneEventSystem : MonoBehaviour
             audioManager = Instantiate(audioManager);
             DontDestroyOnLoad(audioManager);
             AudioController.isHaveClone = true;
+        }
+        //语言本地化
+        string language = Application.systemLanguage.ToString();
+        if (language == "Chinese")
+        {
+            tipYes.GetComponentInChildren<Text>().text = "是";
+            tipYes.GetComponentInChildren<Text>().font = custonfont;
+            tipNo.GetComponentInChildren<Text>().text = "否";
+            tipNo.GetComponentInChildren<Text>().font = custonfont;
+            tip.GetComponentInChildren<Text>().text = "过去的数据将被清空，是否确定？";
+            tip.GetComponentInChildren<Text>().font = custonfont;
+            newGame.GetComponentInChildren<Text>().font = custonfont;
+            newGame.GetComponentInChildren<Text>().text = "新游戏";
+            continueGame.GetComponentInChildren<Text>().font = custonfont;
+            continueGame.GetComponentInChildren<Text>().text = "继续游戏";
+            
         }
     }
 

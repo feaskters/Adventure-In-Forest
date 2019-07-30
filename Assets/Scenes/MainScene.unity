@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -625,7 +625,7 @@ RectTransform:
   m_Children:
   - {fileID: 1346848286}
   m_Father: {fileID: 1698859132}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -869,6 +869,7 @@ MonoBehaviour:
   tipNo: {fileID: 345653948}
   audioManager: {fileID: 8300585660351716897, guid: b06bea5b13ff242d3b36e70400a295c1,
     type: 3}
+  custonfont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &753878882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1568,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 1698859132}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1596,7 +1597,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 38
+    m_FontSize: 33
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1644,8 +1645,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 594870975}
   - {fileID: 1501751355}
+  - {fileID: 594870975}
   - {fileID: 345653947}
   - {fileID: 1127208181}
   m_Father: {fileID: 985052694}
@@ -1867,7 +1868,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Adventure in Forest
+  m_Text: Adventure of Usaki
 --- !u!222 &1901733352
 CanvasRenderer:
   m_ObjectHideFlags: 0
