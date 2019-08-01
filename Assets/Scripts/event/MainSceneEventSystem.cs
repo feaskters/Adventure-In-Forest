@@ -38,7 +38,8 @@ public class MainSceneEventSystem : MonoBehaviour
         }
         //语言本地化
         string language = Application.systemLanguage.ToString();
-        if (language == "Chinese")
+        Debug.Log(language);
+        if (language == "Chinese" || language == "cn" || language == "ChineseSimplified")
         {
             tipYes.GetComponentInChildren<Text>().text = "是";
             tipYes.GetComponentInChildren<Text>().font = custonfont;
